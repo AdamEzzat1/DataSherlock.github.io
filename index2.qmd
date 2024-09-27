@@ -1,0 +1,44 @@
+---
+title: "Data Sherlock"
+---
+
+---
+about:
+  template: jolla
+  id: about-block
+  image: "img/my_image.jpg"
+  links:
+    - icon: mastodon
+      text: Mastodon
+      href: https://techhub.social/@DataSherlock
+    - icon: github
+      text: Github
+      href: https://github.com/AdamEzzat1
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/adamezzat/
+    - icon: envelope
+      text: Email
+      href: "mailto:mail.adamezzat24@gmail.com"  
+---
+
+---
+title: "Welcome to my website!"
+---
+
+\<div class="quarto-container"\> \<div class="content-wrapper"\>
+
+# Data Scientist's Journey
+
+I am a data scientist with a passion for extracting valuable insights from data to empower informed decision-making. My background combines technical skills with business acumen, allowing me to bridge the gap between data analysis and real-world applications.
+
+Proficient in Python and SQL, I build and deploy machine learning models on cloud platforms like AWS, utilizing services such as Redshift, Athena, and QuickSight for scalable pipelines and interactive dashboards. Additionally, I leverage Jupyter Notebook for data exploration and visualization, allowing me to effectively communicate insights to both technical and non-technical audiences.
+
+Throughout my data science journey, I have gained experience across the entire data science life cycle. This includes meticulously curating and engineering data to develop robust forecasting models using advanced techniques like Long Short-Term Memory networks (LSTMs). With a strong foundation in statistics and data manipulation, I am comfortable working with various tools and libraries such as Pandas, Scikit-learn, and TensorFlow in Python as well as tidyverse, caret, and MXNet.
+
+I am eager to showcase my work and explore exciting data science challenges! My portfolio website provides further details on my projects, and you can connect with me on LinkedIn to learn more about my experiences. Contact me if you have any questions or would like to discuss potential projects.
+
+</div>
+
+::: side-image
+:::

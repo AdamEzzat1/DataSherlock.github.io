@@ -1,0 +1,82 @@
+/*-- scss:defaults --*/
+
+// Colors
+$primary: #8B4513;  // Saddle Brown
+$secondary: #DEB887;  // Burlywood
+$body-bg: #F5F5DC;  // Beige
+$body-color: #2F4F4F;  // Dark Slate Gray
+$link-color: #800000;  // Maroon
+
+// Typography
+$font-family-sans-serif: "Georgia", serif;
+$font-family-monospace: "Courier New", monospace;
+$headings-font-family: "Times New Roman", serif;
+
+/*-- scss:rules --*/
+
+// Header styling
+h1, h2, h3, h4, h5, h6 {
+  color: $primary;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+// Blockquote styling
+blockquote {
+  border-left: 3px solid $secondary;
+  padding-left: 1em;
+  font-style: italic;
+  color: darken($body-color, 10%);
+}
+
+// Code block styling
+pre {
+  background-color: darken($body-bg, 5%);
+  border: 1px solid $secondary;
+  border-radius: 4px;
+}
+
+// Link styling
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Table styling
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1em;
+  
+  th, td {
+    border: 1px solid $secondary;
+    padding: 0.5em;
+  }
+  
+  th {
+    background-color: $secondary;
+    color: $body-bg;
+  }
+}
+
+// Decorative elements
+.quarto-title-block {
+  &::before {
+    content: "🔍";
+    font-size: 2em;
+    display: block;
+    text-align: center;
+    margin-bottom: 0.5em;
+  }
+}
+
+.section h2::before {
+  content: "📜 ";
+}
+
+.callout-note {
+  border-left-color: $primary;
+  background-color: lighten($secondary, 20%);
+}

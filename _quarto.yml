@@ -1,0 +1,23 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Data Sherlock"
+  navbar:
+    left:
+      - href: index.html
+        text: Home
+      - About.qmd
+      - href: blog.qmd
+        text: Blog
+      - Projects.qmd
+
+format:
+  html:
+    theme: sherlock4.scss
+    css: styles.css
+    toc: true
+    index.file: index.html
+
+editor: visual

@@ -1,0 +1,39 @@
+---
+title: "About"
+---
+
+## Education and Experience
+
+I. **Data Science** (Springboard) - Focused on Deep Learning.
+
+II. **Data Collection Specialist** (Lab126, Amazon) - Gained a strong understanding of data quality and the importance of all data points.
+
+## Skills and Interests
+
+I. **Time Series Analysis:** Expertise in time series analysis techniques.
+
+II. **Generative AI:** Strong interest in generative AI applications.
+
+III. **AI Agent Development:** Currently pursuing knowledge in AI agent creation.
+
+IV. **Continuous Learning:** Committed to staying current with advancements in time series analysis and deep learning.
+
+---
+about:
+  template: jolla
+  id: about-block
+  image: "img/my_image.jpg"
+  links:
+    - icon: mastodon
+      text: Mastodon
+      href: https://techhub.social/@DataSherlock
+    - icon: github
+      text: Github
+      href: https://github.com/AdamEzzat1
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/adamezzat/
+    - icon: envelope
+      text: Email
+      href: "mailto:mail.adamezzat24@gmail.com"  
+---

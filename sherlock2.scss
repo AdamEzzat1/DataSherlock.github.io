@@ -1,0 +1,52 @@
+/*-- scss:defaults --*/
+
+// Colors
+$primary: #8B4513;  // Saddle Brown
+$secondary: #DEB887;  // Burlywood
+$body-bg: #F5F5DC;  // Beige
+$body-color: #2F4F4F;  // Dark Slate Gray
+$link-color: #800000;  // Maroon
+
+// Typography
+$font-family-sans-serif: "Georgia", serif;
+$font-family-monospace: "Courier New", monospace;
+$headings-font-family: "Times New Roman", serif;
+
+/*-- scss:rules --*/
+
+// (All your existing styles remain unchanged)
+
+// Side image
+body {
+  position: relative;
+  background-image: url('img/openart-image_PNHcjeyf_1727392898706_raw.jpg');
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-attachment: fixed;
+  background-size: auto 100%;
+}
+
+.quarto-container {
+  background-color: rgba(245, 245, 220, 0.9); // Semi-transparent beige
+  max-width: 70%; // Adjust this value to control the width of the main content
+  margin-left: 0;
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+// Ensure the title block is within the main content area
+.quarto-title-block {
+  max-width: 100%;
+}
+
+// Responsive design
+@media (max-width: 1200px) {
+  body {
+    background-image: none;
+  }
+  
+  .quarto-container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}

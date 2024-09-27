@@ -1,0 +1,214 @@
+---
+title: "Data Sherlock"
+---
+
+---
+about:
+  template: jolla
+  id: about-block
+  image: "img/my_image.jpg"
+  links:
+    - icon: mastodon
+      text: Mastodon
+      href: https://techhub.social/@DataSherlock
+    - icon: github
+      text: Github
+      href: https://github.com/AdamEzzat1
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/adamezzat/
+    - icon: envelope
+      text: Email
+      href: "mailto:mail.adamezzat24@gmail.com"  
+---
+
+# Welcome to my website!
+
+I am a data scientist with a passion for extracting valuable insights from data to empower informed decision-making. My background combines technical skills with business acumen, allowing me to bridge the gap between data analysis and real-world applications.
+
+Proficient in Python and SQL, I build and deploy machine learning models on cloud platforms like AWS, utilizing services such as Redshift, Athena, and QuickSight for scalable pipelines and interactive dashboards. Additionally, I leverage Jupyter Notebook for data exploration and visualization, allowing me to effectively communicate insights to both technical and non-technical audiences.
+
+Throughout my data science journey, I have gained experience across the entire data science life cycle. This includes meticulously curating and engineering data to develop robust forecasting models using advanced techniques like Long Short-Term Memory networks (LSTMs). With a strong foundation in statistics and data manipulation, I am comfortable working with various tools and libraries such as Pandas, Scikit-learn, and TensorFlow in Python as well as tidyverse, caret, and MXNet.
+
+.I am eager to showcase my work and explore exciting data science challenges! My portfolio website provides further details on my projects, and you can connect with me on LinkedIn to learn more about my experiences. [contact me](mailto:mail.adamezzat24@gmail.com) if you have any questions or would like to discuss potential projects.
+
+```{r}
+library(isotree)  # For isolation forest
+library(ggplot2)  # For plotting
+library(dplyr)    # For data manipulation
+
+# Load the mpg dataset (comes with ggplot2)
+data(mpg)
+
+# Create an isolation forest model
+model <- isolation.forest(mpg[, c("cty", "hwy")], ntrees = 100)
+
+# Predict outlier scores
+scores <- predict(model, mpg[, c("cty", "hwy")])
+
+# Identify outliers based on a threshold (e.g., scores > 0.5)
+outliers <- mpg[scores > 0.5, ]
+
+# Visualize the results
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point(aes(color = scores > 0.5)) +
+  scale_color_manual(values = c("blue", "red")) +
+  labs(title = "Outlier Detection in MPG Data",
+       x = "City MPG", y = "Highway MPG",
+       color = "Is Outlier")
+```
+
+```{r}
+library(e1071)
+
+
+# Create a one-class SVM model
+model <- svm(x = mpg[, c("cty", "hwy")], y = NULL, type = "one-classification", nu = 0.1, kernel = "radial")
+
+# Predict outlier scores
+scores <- predict(model, mpg[, c("cty", "hwy")])
+
+# Identify outliers (scores < 0 are considered outliers)
+outliers <- mpg[scores < 0, ]
+
+# Visualize the results
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point(aes(color = scores < 0)) +
+  scale_color_manual(values = c("blue", "red")) +
+  labs(title = "One-Class SVM Outlier Detection in MPG Data",
+       x = "City MPG", y = "Highway MPG",
+       color = "Is Outlier")
+```
+
+```{r}
+# Install required packages if not already installed
+# install.packages(c("fpc", "ggplot2"))
+
+library(fpc)
+
+
+# Perform DBSCAN clustering
+result <- dbscan(mpg[, c("cty", "hwy")], eps = 2, MinPts = 5)
+
+# Identify outliers (points with cluster label 0)
+outliers <- mpg[result$cluster == 0, ]
+
+# Add cluster information to the original dataset
+mpg$cluster <- factor(result$cluster, 
+                      levels = c(0, 1:(max(result$cluster))),
+                      labels = c("Outlier", paste("Cluster", 1:(max(result$cluster)))))
+
+# Visualize the results
+ggplot(mpg, aes(x = cty, y = hwy, color = cluster)) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("red", rainbow(max(result$cluster)))) +
+  labs(title = "DBSCAN Clustering and Outlier Detection in MPG Data",
+       x = "City MPG", y = "Highway MPG",
+       color = "Cluster") +
+  theme_minimal()
+
+# Print summary of results
+cat("Number of clusters:", max(result$cluster), "\n")
+cat("Number of outliers:", sum(result$cluster == 0), "\n")
+```
+
+```{r}
+
+# Calculate Mahalanobis distances
+mahal_dist <- mahalanobis(mpg[, c("cty", "hwy")], 
+                          colMeans(mpg[, c("cty", "hwy")]), 
+                          cov(mpg[, c("cty", "hwy")]))
+
+# Calculate the threshold using chi-square distribution
+threshold <- qchisq(0.975, df = ncol(mpg[, c("cty", "hwy")]))
+
+# Identify outliers based on the threshold
+outliers <- mpg[mahal_dist > threshold, ]
+
+# Add outlier information to the original dataset
+mpg$is_outlier <- mahal_dist > threshold
+
+# Visualize the results
+ggplot(mpg, aes(x = cty, y = hwy, color = is_outlier)) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("blue", "red"), 
+                     labels = c("Normal", "Outlier")) +
+  labs(title = "Mahalanobis Distance Outlier Detection in MPG Data",
+       x = "City MPG", y = "Highway MPG",
+       color = "Outlier Status") +
+  theme_minimal()
+
+# Print summary of results
+cat("Number of outliers detected:", sum(mpg$is_outlier), "\n")
+cat("Percentage of outliers:", round(mean(mpg$is_outlier) * 100, 2), "%\n")
+```
+
+## Outlier Detection Methods
+
+### Mahalanobis Distance
+
+-   **Statistical approach** based on data covariance structure.
+
+-   **Measures** distance from the data centroid.
+
+-   **Assumes** multivariate normal distribution.
+
+-   **Effective** for elliptical distributions.
+
+-   **Sensitive** to extreme outliers.
+
+### DBSCAN (Density-Based Spatial Clustering of Applications with Noise)
+
+-   **Density-based clustering** for outlier identification.
+
+-   **Groups** dense regions, labels sparse points as outliers.
+
+-   **No** specific distribution assumption.
+
+-   **Detects** outliers in arbitrarily shaped clusters.
+
+-   **Requires** parameter tuning (epsilon, min_samples).
+
+-   **Effective** for spatial data and varying densities.
+
+### One-Class SVM
+
+-   **Machine learning** approach with a decision boundary.
+
+-   **Separates** majority data from the origin.
+
+-   **Handles** high-dimensional data and non-linear relationships.
+
+-   **Requires** only normal data for training (unsupervised).
+
+-   **Sensitive** to kernel and hyperparameters.
+
+-   **May struggle** with multiple normal behaviors.
+
+### Isolation Forest
+
+-   **Ensemble method** using random forests.
+
+-   **Isolates** anomalies by partitioning feature space.
+
+-   **Assumes** anomalies are rare and different.
+
+-   **Works well** in high-dimensional spaces.
+
+-   **Faster and more memory-efficient** than distance-based methods.
+
+-   **Handles** large datasets and is less affected by irrelevant features.
+
+**Choosing the right outlier detection method depends on various factors, including:**
+
+-   **Data distribution:** Some methods assume specific distributions (e.g., Mahalanobis Distance), while others are more flexible (e.g., DBSCAN).
+
+-   **Cluster shape:** DBSCAN is effective for arbitrarily shaped clusters, while Mahalanobis Distance might struggle with non-elliptical shapes.
+
+-   **Outlier density:** DBSCAN works well when outliers are sparse, while One-Class SVM might struggle if outliers are dense.
+
+-   **Computational resources:** Some methods (e.g., Isolation Forest) are faster and more memory-efficient than others.
+
+-   **Domain knowledge:** Understanding the underlying data and the expected behavior of outliers can help guide the choice of method.
+
+**It's often beneficial to explore multiple methods and compare their results to identify the most suitable approach for a given dataset.** By carefully considering these factors, you can avoid missing important details and gain valuable insights from your data.

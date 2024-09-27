@@ -1,0 +1,68 @@
+/*-- scss:defaults --*/
+
+// Colors
+$primary: #8B4513;  // Saddle Brown
+$secondary: #DEB887;  // Burlywood
+$body-bg: #F5F5DC;  // Beige
+$body-color: #2F4F4F;  // Dark Slate Gray
+$link-color: #800000;  // Maroon
+
+// Typography
+$font-family-sans-serif: "Georgia", serif;
+$font-family-monospace: "Courier New", monospace;
+$headings-font-family: "Times New Roman", serif;
+
+/*-- scss:rules --*/
+
+// (Keep all your existing styles)
+
+// Layout
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.quarto-container {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+}
+
+.content-wrapper {
+  flex: 0 0 70%;
+  background-color: rgba(245, 245, 220, 0.9); // Semi-transparent beige
+  padding: 2em;
+  overflow-y: auto;
+}
+
+.side-image {
+  flex: 1;
+  background-image: url('img/openart-image_PNHcjeyf_1727392898706_raw.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+// Ensure the title block is within the main content area
+.quarto-title-block {
+  max-width: 100%;
+}
+
+// Responsive design
+@media (max-width: 1200px) {
+  .quarto-container {
+    flex-direction: column;
+  }
+  
+  .content-wrapper {
+    flex: none;
+    width: 100%;
+  }
+  
+  .side-image {
+    display: none; // Hide the image on smaller screens
+  }
+}
